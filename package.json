@@ -1,0 +1,18 @@
+{
+  "name": "open-frames-starter-frog",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "frog dev"
+  },
+  "dependencies": {
+    "@hono/node-server": "latest",
+    "@xmtp/frames-validator": "^0.6.2",
+    "frog": "latest",
+    "hono": "^4",
+    "viem": "^2.17.0"
+  },
+  "devDependencies": {
+    "typescript": "latest"
+  }
+}
