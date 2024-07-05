@@ -4,6 +4,7 @@ import { devtools } from "frog/dev";
 import { validateFramesPost } from "@xmtp/frames-validator";
 import { Next, Context } from "hono";
 import { parseUnits, encodeFunctionData, erc20Abi, Abi } from "viem";
+import { baseSepolia } from "viem/chains";
 // import { neynar } from 'frog/hubs'
 
 const addMetaTags = (client: string, version?: string) => {
@@ -62,23 +63,24 @@ app.transaction("/tx", (c) => {
     address = c.address as `0x${string}`;
   }
 
-  // Get current storage price
-  const units = BigInt(parseUnits("1", 6));
+  // Prepare the amount to transfer
+  const amount = BigInt(parseUnits("1", 6));
 
   // Transfering 1 USDC to yourself
   const calldata = encodeFunctionData({
     abi: erc20Abi,
     functionName: "transfer",
-    args: [address as `0x${string}`, units] as const,
+    args: [address as `0x${string}`, amount] as const,
   });
 
-  const BASE_USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
+  const BASE_SEPOLIA_USDC_ADDRESS =
+    "0x036CbD53842c5426634e7929541eC2318f3dCF7e";
   return c.res({
-    chainId: "eip155:8453", // Base Mainnet 8453
+    chainId: `eip155:${baseSepolia.id}`,
     method: "eth_sendTransaction",
     params: {
       abi: erc20Abi as Abi,
-      to: BASE_USDC_ADDRESS,
+      to: BASE_SEPOLIA_USDC_ADDRESS,
       data: calldata,
       value: BigInt(0),
     },
