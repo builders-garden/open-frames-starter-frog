@@ -85,6 +85,44 @@ app.transaction("/tx", (c) => {
   });
 });
 
+app.frame("/tx-success", (c) => {
+  return c.res({
+    image: (
+      <div
+        style={{
+          alignItems: "center",
+          background: "white",
+          backgroundSize: "100% 100%",
+          display: "flex",
+          flexDirection: "column",
+          flexWrap: "nowrap",
+          height: "100%",
+          justifyContent: "center",
+          textAlign: "center",
+          width: "100%",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            color: "black",
+            fontSize: 60,
+            fontStyle: "normal",
+            letterSpacing: "-0.025em",
+            lineHeight: 1.4,
+            marginTop: 30,
+            padding: "0 120px",
+            whiteSpace: "pre-wrap",
+          }}
+        >
+          Transaction Successful
+        </div>
+      </div>
+    ),
+    intents: [<Button action="/">Back</Button>],
+  });
+});
+
 app.frame("/submit", (c) => {
   const { buttonValue, inputText, deriveState } = c;
   const state = deriveState((previousState) => {
@@ -194,7 +232,9 @@ app.frame("/", (c) => {
       <Button action="/submit" value="post-button">
         Post
       </Button>,
-      <Button.Transaction target="/tx">Tx</Button.Transaction>,
+      <Button.Transaction target="/tx" action="/tx-success">
+        Tx
+      </Button.Transaction>,
     ],
   });
 });
